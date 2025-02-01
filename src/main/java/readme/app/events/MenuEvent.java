@@ -9,20 +9,21 @@ import readme.app.taskbar.Taskbar;
 public class MenuEvent {
 
     private final Application application;
-    private final Taskbar taskbar = new Taskbar();
+    private final Taskbar taskbar;
     private boolean isVisible = false;
 
-    public MenuEvent(Application application) {
+    public MenuEvent(@NotNull Application application) {
         this.application = application;
+        this.taskbar = new Taskbar(this.application);
         this.taskbar.setTaskbarUI(application.shell, application.display);
     }
 
     public void openMenu(@NotNull Button button) {
         button.addListener(SWT.Selection,  event -> {
-            isVisible = !isVisible;
+            this.isVisible = !isVisible;
 
-            taskbar.showTaskbar(isVisible);
-            application.shell.layout();
+            this.taskbar.showTaskbar(isVisible);
+            this.application.shell.layout();
         });
     }
 }
