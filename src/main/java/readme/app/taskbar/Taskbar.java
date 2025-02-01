@@ -8,9 +8,17 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.jetbrains.annotations.NotNull;
+import readme.app.Application;
+import readme.app.events.FileEvent;
 
 public class Taskbar {
     private Composite taskbar;
+    private final FileEvent fileEvent;
+
+    public Taskbar(@NotNull  Application application) {
+        this.fileEvent = new FileEvent(application);
+    }
 
     public void setTaskbarUI(Composite composite, Display display) {
         taskbar = new Composite(composite, SWT.NONE);
@@ -49,6 +57,8 @@ public class Taskbar {
         openFile.setLayoutData(openFileData);
 
         taskbar.setVisible(false);
+
+        fileEvent.setFileEvent(openFile);
     }
 
     public void showTaskbar(boolean visible) {
