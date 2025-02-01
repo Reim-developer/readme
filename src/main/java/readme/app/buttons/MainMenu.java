@@ -7,10 +7,17 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import readme.app.Application;
+import readme.app.events.MenuEvent;
 import readme.app.ulti.ImageSet;
 
 public class MainMenu {
     private final ImageSet imageSet = new ImageSet();
+    private final MenuEvent menuEvent;
+
+    public MainMenu(Application application) {
+        this.menuEvent = new MenuEvent(application);
+    }
 
     public void setMainMenuButton(Composite composite, Display display) {
         Button menuButton = new Button(composite, SWT.PUSH);
@@ -26,5 +33,7 @@ public class MainMenu {
         formData.left = new FormAttachment(2, -10);
         formData.top = new FormAttachment(2, 0);
         menuButton.setLayoutData(formData);
+
+        menuEvent.openMenu(menuButton);
     }
 }
