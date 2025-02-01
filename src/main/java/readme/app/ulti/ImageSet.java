@@ -10,6 +10,8 @@ public class ImageSet {
                 getClass().getResourceAsStream(imagePath)
         );
         ImageData imageData = originalImg.getImageData();
+
+        originalImg.dispose();
         ImageData scaledImgData = imageData.scaledTo(width, height);
 
         return new Image(display, scaledImgData);
