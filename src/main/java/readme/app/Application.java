@@ -9,11 +9,19 @@ import readme.app.buttons.MainMenu;
 import readme.app.labels.Nothing;
 import readme.app.props.Size;
 
+
 public class Application {
-    private final Display display = new Display();
-    private final Shell shell = new Shell(display);
-    private final MainMenu mainMenu = new MainMenu();
-    private final Nothing nothing = new Nothing();
+    public final Display display;
+    public final Shell shell;
+    private final MainMenu mainMenu;
+    private final Nothing nothingLabel;
+
+    public Application() {
+        this.display = new Display();
+        this.shell = new Shell(this.display);
+        this.mainMenu = new MainMenu(this);
+        this.nothingLabel = new Nothing();
+    }
 
     public static void main(String[] args) {
         Application application = new Application();
@@ -22,20 +30,21 @@ public class Application {
     }
 
     private void init() {
-        Color color = new Color(47, 49, 54);
+        Color color = new Color(this.display, 47, 49, 54);
 
-        shell.setText("readme!");
-        shell.setSize(new Point(Size.APP_WIDTH, Size.APP_HEIGHT));
-        shell.setLayout(new FormLayout());
+        this.shell.setText("readme!");
+        this.shell.setSize(new Point(Size.APP_WIDTH, Size.APP_HEIGHT));
+        this.shell.setLayout(new FormLayout());
 
-        mainMenu.setMainMenuButton(shell, display);
-        nothing.setNothingToShow(shell, display);
+        this.mainMenu.setMainMenuButton(shell, display);
+        this.nothingLabel.setNothingToShow(shell, display);
 
-        shell.open();
-        while (!shell.isDisposed()) {
-            if(!display.readAndDispatch()) { display.sleep(); }
+        this.shell.setBackground(color);
+        this.shell.open();
+
+        while (!this.shell.isDisposed()) {
+            if(!this.display.readAndDispatch()) this.display.sleep();
         }
-        color.dispose();
-        shell.dispose();
+        this.shell.dispose();
     }
 }
