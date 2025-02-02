@@ -22,6 +22,7 @@ public class MainMenu {
     public void setMainMenuButton(Composite composite, Display display) {
         Button menuButton = new Button(composite, SWT.PUSH);
         menuButton.setBackground(new Color(composite.getDisplay(), 47, 49, 54));
+        menuButton.setToolTipText("Show Main Menu");
 
         menuButton.setImage(imageSet.imageButton(
                 display,
