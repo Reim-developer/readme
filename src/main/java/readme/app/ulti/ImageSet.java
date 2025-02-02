@@ -9,10 +9,11 @@ public class ImageSet {
         Image originalImg = new Image(display,
                 getClass().getResourceAsStream(imagePath)
         );
+
         ImageData imageData = originalImg.getImageData();
+        ImageData scaledImgData = imageData.scaledTo(width, height);
 
         originalImg.dispose();
-        ImageData scaledImgData = imageData.scaledTo(width, height);
 
         return new Image(display, scaledImgData);
     }
