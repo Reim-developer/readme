@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Shell;
 import readme.app.buttons.MainMenu;
 import readme.app.labels.Nothing;
 import readme.app.props.Size;
+import readme.app.ulti.Memory;
 
 
 public class Application {
@@ -15,12 +16,14 @@ public class Application {
     public final Shell shell;
     private final MainMenu mainMenu;
     private final Nothing nothingLabel;
+    private final Memory memory;
 
     public Application() {
         this.display = new Display();
         this.shell = new Shell(this.display);
         this.mainMenu = new MainMenu(this);
         this.nothingLabel = new Nothing();
+        this.memory = new Memory();
     }
 
     public static void main(String[] args) {
@@ -41,6 +44,7 @@ public class Application {
 
         this.shell.setBackground(color);
         this.shell.open();
+        this.memory.dispose(shell, color);
 
         while (!this.shell.isDisposed()) {
             if(!this.display.readAndDispatch()) this.display.sleep();
