@@ -11,13 +11,16 @@ import org.eclipse.swt.widgets.Display;
 import org.jetbrains.annotations.NotNull;
 import readme.app.Application;
 import readme.app.events.FileEvent;
+import readme.app.ulti.Memory;
 
 public class Taskbar {
     private Composite taskbar;
     private final FileEvent fileEvent;
+    private final Memory memory;
 
     public Taskbar(@NotNull  Application application) {
         this.fileEvent = new FileEvent(application);
+        this.memory = new Memory();
     }
 
     public void setTaskbarUI(Composite composite, Display display) {
@@ -59,6 +62,8 @@ public class Taskbar {
         taskbar.setVisible(false);
 
         fileEvent.setFileEvent(openFile);
+        memory.dispose(openFile, color);
+        memory.dispose(viewButton, color);
     }
 
     public void showTaskbar(boolean visible) {
