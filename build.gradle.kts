@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation("org.eclipse.platform:org.eclipse.swt.gtk.linux.x86_64:3.128.0")
+    implementation("commons-codec:commons-codec:1.18.0")
     implementation(kotlin("stdlib-jdk8"))
 }
 
