@@ -7,6 +7,7 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.*;
 import org.jetbrains.annotations.NotNull;
 import readme.app.Application;
+import readme.app.events.OpenFile;
 
 public class FileOptions {
     public final Table table;
@@ -14,13 +15,15 @@ public class FileOptions {
     private final String[] fileOptions;
     private final Color color;
     private boolean isMouseOverTable;
+    private final OpenFile openFile;
 
     public FileOptions(@NotNull Application application) {
-        this.table = new Table(application.shell, SWT.BORDER);
+        this.table = new Table(application.shell, SWT.NONE);
         this.tableColumn = new TableColumn(table, SWT.CENTER);
 
-        this.fileOptions = new String[]{"Open File", "Open Folder", "New File", "New Folder", "Exit"};
+        this.fileOptions = new String[]{"Open File", "Open Folder", "Exit"};
         this.color = new Color(application.display, 47, 49, 54);
+        this.openFile = new OpenFile(application);
     }
 
     public void setFileOptions() {
@@ -42,13 +45,10 @@ public class FileOptions {
 
         table.addListener(SWT.MouseEnter, event -> isMouseOverTable = true);
         table.addListener(SWT.MouseExit, event -> isMouseOverTable = false);
+        openFile.setOpenFile(table);
     }
 
-    public void showFileOptions(boolean visible) {
-        this.table.setVisible(visible);
-    }
+    public void showFileOptions(boolean visible) { this.table.setVisible(visible); }
 
-    public boolean isMouseOverTable() {
-        return isMouseOverTable;
-    }
+    public boolean isMouseOverTable() { return isMouseOverTable; }
 }
