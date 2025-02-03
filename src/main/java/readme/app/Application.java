@@ -22,7 +22,7 @@ public class Application {
         this.display = new Display();
         this.shell = new Shell(this.display);
         this.mainMenu = new MainMenu(this);
-        this.nothingLabel = new Nothing();
+        this.nothingLabel = new Nothing(this);
         this.memory = new Memory();
     }
 
@@ -40,7 +40,8 @@ public class Application {
         this.shell.setLayout(new FormLayout());
 
         this.mainMenu.setMainMenuButton(shell, display);
-        this.nothingLabel.setNothingToShow(shell, display);
+        this.nothingLabel.setNothingLabel(display);
+        this.nothingLabel.showNothingLabel(true);
 
         this.shell.setBackground(color);
         this.shell.open();
