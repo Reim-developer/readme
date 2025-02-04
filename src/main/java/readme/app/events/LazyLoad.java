@@ -28,13 +28,15 @@ public class LazyLoad {
                 int visibleLines = styledText.getClientArea().height / styledText.getLineHeight();
 
                 if (topIndex + visibleLines >= lineCount - 10) {
-                    try {
-                        String moreContent = lazyFileReader.readNextLines(100);
-                        if (!moreContent.isEmpty()) styledText.append(moreContent);
-
-                    } catch (Exception exception) {
-                        throw new RuntimeException("Error when loading file");
-                    }
+                    new Thread(() -> {
+                        try {
+                            String moreContent = lazyFileReader.readNextLines(100);
+                            if(moreContent.isEmpty()) return;
+                            styledText.getDisplay().asyncExec(() -> styledText.append(moreContent));
+                        } catch (Exception exception) {
+                            System.out.println("Error when reading file");
+                        }
+                    }).start();
                 }
             }
         };
