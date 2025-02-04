@@ -8,6 +8,7 @@ import readme.app.area.TextView;
 import readme.app.events.LazyLoad;
 import readme.app.labels.Nothing;
 import readme.app.ulti.LazyFileReader;
+import readme.app.ulti.VirtualTextRenderer;
 
 public class File {
     private final FileDialog fileDialog;
@@ -20,8 +21,8 @@ public class File {
         this.fileDialog = new FileDialog(application.shell);
         this.textView = new TextView(application);
         this.textView.setTextView(application.shell);
-        this.lazyLoad = new LazyLoad();
         this.nothing = new Nothing(application);
+        this.lazyLoad = new LazyLoad();
         this.nothing.setNothingLabel(application.display);
     }
 
@@ -34,16 +35,13 @@ public class File {
 
         this.nothing.showNothingLabel(false);
         this.textView.showTextView(true);
-        String fileContent = "";
-        this.textView.styledText.setText(fileContent);
 
         try {
-            lazyFileReader = new LazyFileReader(filePath);
-            fileContent = lazyFileReader.readNextLines(100);
-            this.textView.styledText.append(fileContent);
-        }
-        catch (Exception exception) { System.out.println("Error when read file"); }
+            this.lazyFileReader = new LazyFileReader(filePath);
+            VirtualTextRenderer virtualTextRenderer = new VirtualTextRenderer(this.textView.styledText, this.lazyFileReader);
+            virtualTextRenderer.updateView(0);
 
-        this.lazyLoad.loadWithScroll(this.textView.styledText, this.lazyFileReader);
+            this.lazyLoad.loadWithScroll(this.textView.styledText, this.lazyFileReader);
+        } catch (Exception ignored) {}
     }
 }
