@@ -13,7 +13,6 @@ import readme.app.ulti.VirtualTextRenderer;
 public class File {
     private final FileDialog fileDialog;
     private final TextView textView;
-    private LazyFileReader lazyFileReader;
     private final LazyLoad lazyLoad;
     private final Nothing nothing;
 
@@ -37,11 +36,11 @@ public class File {
         this.textView.showTextView(true);
 
         try {
-            this.lazyFileReader = new LazyFileReader(filePath);
-            VirtualTextRenderer virtualTextRenderer = new VirtualTextRenderer(this.textView.styledText, this.lazyFileReader);
+            LazyFileReader lazyFileReader = new LazyFileReader(filePath);
+            VirtualTextRenderer virtualTextRenderer = new VirtualTextRenderer(this.textView.styledText, lazyFileReader);
             virtualTextRenderer.updateView(0);
 
-            this.lazyLoad.loadWithScroll(this.textView.styledText, this.lazyFileReader);
+            this.lazyLoad.loadWithScroll(this.textView.styledText, lazyFileReader);
         } catch (Exception ignored) {}
     }
 }
