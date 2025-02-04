@@ -38,7 +38,7 @@ public class File {
         try {
             LazyFileReader lazyFileReader = new LazyFileReader(filePath);
             VirtualTextRenderer virtualTextRenderer = new VirtualTextRenderer(this.textView.styledText, lazyFileReader);
-            virtualTextRenderer.updateView(0);
+            virtualTextRenderer.updateView();
 
             this.lazyLoad.loadWithScroll(this.textView.styledText, lazyFileReader);
         } catch (Exception ignored) {}
