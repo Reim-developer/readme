@@ -20,7 +20,7 @@ public class FileOptions {
     private final Memory memory;
 
     public FileOptions(@NotNull Application application) {
-        this.table = new Table(application.shell, SWT.NONE);
+        this.table = new Table(application.shell, SWT.FULL_SELECTION);
         this.tableColumn = new TableColumn(table, SWT.CENTER);
 
         this.fileOptions = new String[]{"Open File", "Open Folder", "Exit"};
@@ -39,7 +39,7 @@ public class FileOptions {
         }
 
         FormData formData = new FormData();
-        formData.left = new FormAttachment(5, 20);
+        formData.left = new FormAttachment(1, 20);
         formData.top = new FormAttachment(5, 22);
         formData.width = 135;
 
