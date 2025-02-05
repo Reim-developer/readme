@@ -47,8 +47,10 @@ public class ViewEvent {
         this.viewOptions.table.addMouseTrackListener(new MouseTrackAdapter() {
             @Override
             public void mouseExit(MouseEvent e) {
-                viewOptions.table.setVisible(false);
-                application.shell.layout();
+               Display.getCurrent().timerExec(100, () -> {
+                   viewOptions.showViewOptions(false);
+                   application.shell.layout();
+               });
             }
         });
     }
