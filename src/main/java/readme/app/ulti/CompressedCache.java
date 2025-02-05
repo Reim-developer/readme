@@ -12,7 +12,7 @@ public class CompressedCache {
     private final Map<Integer, byte[]> cache =  new LinkedHashMap<>(500, 0.75f, true) {
       @Override
       protected boolean removeEldestEntry(Map.Entry<Integer, byte[]> eldest) {
-          return size() > 200;
+          return size() > 500;
       }
     };
 
