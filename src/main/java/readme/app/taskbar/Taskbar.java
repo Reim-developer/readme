@@ -11,30 +11,33 @@ import org.eclipse.swt.widgets.Display;
 import org.jetbrains.annotations.NotNull;
 import readme.app.Application;
 import readme.app.events.FileEvent;
+import readme.app.events.ViewEvent;
 import readme.app.ulti.Memory;
 
 public class Taskbar {
     private Composite taskbar;
     private final FileEvent fileEvent;
     private final Memory memory;
+    private final ViewEvent viewEvent;
 
     public Taskbar(@NotNull  Application application) {
         this.fileEvent = new FileEvent(application);
+        this.viewEvent = new ViewEvent(application);
         this.memory = new Memory();
     }
 
     public void setTaskbarUI(Composite composite, Display display) {
-        taskbar = new Composite(composite, SWT.NONE);
-        taskbar.setLayout(new FormLayout());
+        this.taskbar = new Composite(composite, SWT.NONE);
+        this.taskbar.setLayout(new FormLayout());
 
         Color color = new Color(display, 47, 49, 54);
-        taskbar.setBackground(color);
+        this.taskbar.setBackground(color);
 
         FormData taskbarFormData = new FormData();
         taskbarFormData.left = new FormAttachment(6, 0);
         taskbarFormData.right = new FormAttachment(100, 10);
         taskbarFormData.height = 55;
-        taskbar.setLayoutData(taskbarFormData);
+        this.taskbar.setLayoutData(taskbarFormData);
 
         Button openFile = new Button(taskbar, SWT.PUSH);
         openFile.setText("File");
@@ -59,11 +62,13 @@ public class Taskbar {
         viewButton.setLayoutData(viewData);
         openFile.setLayoutData(openFileData);
 
-        taskbar.setVisible(false);
+        this.taskbar.setVisible(false);
 
-        fileEvent.setFileEvent(openFile);
-        memory.dispose(openFile, color);
-        memory.dispose(viewButton, color);
+        this.fileEvent.setFileEvent(openFile);
+        this.viewEvent.setViewEvent(viewButton);
+
+        this.memory.dispose(openFile, color);
+        this.memory.dispose(viewButton, color);
     }
 
     public void showTaskbar(boolean visible) {
