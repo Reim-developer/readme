@@ -1,6 +1,7 @@
 package readme.app.events;
 
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.jetbrains.annotations.NotNull;
@@ -18,22 +19,36 @@ public class FileEvent {
     }
 
     public void setFileEvent(@NotNull Button button) {
-        button.addListener(SWT.MouseEnter, event -> {
-           this.fileOptions.showFileOptions(true);
-           this.application.shell.layout();
+        button.addMouseTrackListener(new MouseTrackAdapter() {
+            @Override
+            public void mouseEnter(MouseEvent e) {
+                Display.getCurrent().timerExec(100, () -> {
+                    fileOptions.showFileOptions(true);
+                    application.shell.layout();
+                });
+            }
         });
 
-        button.addListener(SWT.MouseExit, event ->
+        button.addMouseTrackListener(new MouseTrackAdapter() {
+            @Override
+            public void mouseExit(MouseEvent e) {
                 Display.getCurrent().timerExec(100, () -> {
-                    if(!this.fileOptions.isMouseOverTable()) {
-                        this.fileOptions.showFileOptions(false);
-                        this.application.shell.layout();
-                    }
-        }));
+                    if(fileOptions.isMouseOverTable()) return;
 
-        this.fileOptions.table.addListener(SWT.MouseExit, event -> {
-            this.fileOptions.table.setVisible(false);
-            this.application.shell.layout();
+                    fileOptions.showFileOptions(false);
+                    application.shell.layout();
+                });
+            }
+        });
+
+        this.fileOptions.table.addMouseTrackListener(new MouseTrackAdapter() {
+            @Override
+            public void mouseExit(MouseEvent e) {
+                Display.getCurrent().timerExec(100, () -> {
+                    fileOptions.showFileOptions(false);
+                    application.shell.layout();
+                });
+            }
         });
     }
 }
