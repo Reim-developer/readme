@@ -23,7 +23,7 @@ public class CompressedCache {
         deflater.finish();
 
         try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-          byte[] buffer = new byte[512];
+          byte[] buffer = new byte[4096];
 
           while(!deflater.finished()) {
               int compressedSize = deflater.deflate(buffer);
@@ -41,7 +41,7 @@ public class CompressedCache {
             inflater.setInput(compressedData);
 
             try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-                byte[] buffer = new byte[512];
+                byte[] buffer = new byte[4096];
 
                 while(!inflater.finished()) {
                     int deCompressedSize = inflater.inflate(buffer);
