@@ -5,16 +5,16 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.jetbrains.annotations.NotNull;
-import readme.app.Application;
+import readme.app.AppContext;
 import readme.app.taskbar.ViewOptions;
 
 public class ViewEvent {
+    private final AppContext appContext;
     private final ViewOptions viewOptions;
-    private final Application application;
 
-    public ViewEvent(@NotNull Application application) {
-        this.application = application;
-        this.viewOptions = new ViewOptions(this.application);
+    public ViewEvent(@NotNull AppContext appContext) {
+        this.appContext = appContext;
+        this.viewOptions = new ViewOptions(this.appContext);
     }
 
     /**
@@ -27,7 +27,7 @@ public class ViewEvent {
             public void mouseEnter(MouseEvent e) {
                 Display.getCurrent().timerExec(100, () -> {
                     viewOptions.table.setVisible(true);
-                    application.shell.layout();
+                    appContext.shell.layout();
                 });
             }
         });
@@ -39,7 +39,7 @@ public class ViewEvent {
                     if(viewOptions.isMouseOverTable()) return;
 
                     viewOptions.showViewOptions(false);
-                    application.shell.layout();
+                    appContext.shell.layout();
                 });
             }
         });
@@ -49,7 +49,7 @@ public class ViewEvent {
             public void mouseExit(MouseEvent e) {
                Display.getCurrent().timerExec(100, () -> {
                    viewOptions.showViewOptions(false);
-                   application.shell.layout();
+                   appContext.shell.layout();
                });
             }
         });
