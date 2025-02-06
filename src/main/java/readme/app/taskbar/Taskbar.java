@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.jetbrains.annotations.NotNull;
-import readme.app.Application;
+import readme.app.AppContext;
 import readme.app.events.FileEvent;
 import readme.app.events.ViewEvent;
 import readme.app.ulti.Memory;
@@ -20,9 +20,9 @@ public class Taskbar {
     private final Memory memory;
     private final ViewEvent viewEvent;
 
-    public Taskbar(@NotNull  Application application) {
-        this.fileEvent = new FileEvent(application);
-        this.viewEvent = new ViewEvent(application);
+    public Taskbar(@NotNull AppContext appContext) {
+        this.fileEvent = new FileEvent(appContext);
+        this.viewEvent = new ViewEvent(appContext);
         this.memory = new Memory();
     }
 
