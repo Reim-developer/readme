@@ -7,19 +7,21 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.jetbrains.annotations.NotNull;
-import readme.app.Application;
+import readme.app.AppContext;
 import readme.app.ulti.Memory;
 
 public class Nothing {
-    private final Label label;
+    public final Label label;
     private final Memory memory;
 
-    public Nothing(@NotNull Application application) {
-        this.label = new Label(application.shell, SWT.NONE);
+    public Nothing(@NotNull AppContext appContext) {
+        this.label = new Label(appContext .shell, SWT.NONE);
         this.memory = new Memory();
+
+        setNothingLabel(appContext.display);
     }
 
-    public void setNothingLabel(Display display) {
+    private void setNothingLabel(Display display) {
         Font font = new Font(display, "Consolas", 12, SWT.NONE);
 
         label.setText("There is nothing to show.");
@@ -32,9 +34,5 @@ public class Nothing {
 
         label.setVisible(false);
         this.memory.dispose(label, font);
-    }
-
-    public void showNothingLabel(boolean visible) {
-        this.label.setVisible(visible);
     }
 }
