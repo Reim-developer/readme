@@ -3,19 +3,19 @@ package readme.app.events;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.jetbrains.annotations.NotNull;
-import readme.app.Application;
+import readme.app.AppContext;
 import readme.app.taskbar.Taskbar;
 
 public class MenuEvent {
 
-    private final Application application;
+    private final AppContext appContext;
     private final Taskbar taskbar;
     private boolean isVisible = false;
 
-    public MenuEvent(@NotNull Application application) {
-        this.application = application;
-        this.taskbar = new Taskbar(this.application);
-        this.taskbar.setTaskbarUI(application.shell, application.display);
+    public MenuEvent(@NotNull AppContext appContext) {
+        this.appContext = appContext;
+        this.taskbar = new Taskbar(this.appContext);
+        this.taskbar.setTaskbarUI(this.appContext.shell,this.appContext.display);
     }
 
     /**
@@ -29,7 +29,7 @@ public class MenuEvent {
             this.isVisible = !isVisible;
 
             this.taskbar.showTaskbar(isVisible);
-            this.application.shell.layout();
+            this.appContext.shell.layout();
 
             if(isVisible) { button.setToolTipText("Hide Main Menu"); return; }
             button.setToolTipText("Show Main Menu");
