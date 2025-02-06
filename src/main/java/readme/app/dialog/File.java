@@ -1,28 +1,21 @@
 package readme.app.dialog;
 
-
 import org.eclipse.swt.widgets.FileDialog;
 import org.jetbrains.annotations.NotNull;
-import readme.app.Application;
-import readme.app.area.TextView;
+import readme.app.AppContext;
 import readme.app.events.LazyLoad;
-import readme.app.labels.Nothing;
 import readme.app.ulti.LazyFileReader;
 import readme.app.ulti.VirtualTextRenderer;
 
 public class File {
     private final FileDialog fileDialog;
-    private final TextView textView;
     private final LazyLoad lazyLoad;
-    private final Nothing nothing;
+    private final AppContext appContext;
 
-    public File(@NotNull Application application) {
-        this.fileDialog = new FileDialog(application.shell);
-        this.textView = new TextView(application);
-        this.textView.setTextView(application.shell);
-        this.nothing = new Nothing(application);
+    public File(@NotNull AppContext appContext) {
+        this.appContext = appContext;
+        this.fileDialog = new FileDialog(this.appContext.shell);
         this.lazyLoad = new LazyLoad();
-        this.nothing.setNothingLabel(application.display);
     }
 
     public void setFileDialog() {
@@ -32,15 +25,15 @@ public class File {
         String filePath = fileDialog.open();
         if(filePath == null) return;
 
-        this.nothing.showNothingLabel(false);
-        this.textView.showTextView(true);
+        this.appContext.getNothingLabel().label.setVisible(false);
+        this.appContext.getTextView().textViewContainer.setVisible(true);
 
         try {
             LazyFileReader lazyFileReader = new LazyFileReader(filePath);
-            VirtualTextRenderer virtualTextRenderer = new VirtualTextRenderer(this.textView.styledText, lazyFileReader);
+            VirtualTextRenderer virtualTextRenderer = new VirtualTextRenderer(this.appContext.getTextView().styledText, lazyFileReader);
             virtualTextRenderer.updateView();
 
-            this.lazyLoad.loadWithScroll(this.textView.styledText, lazyFileReader);
+            this.lazyLoad.loadWithScroll(this.appContext.getTextView().styledText, lazyFileReader);
         } catch (Exception ignored) {}
     }
 }
