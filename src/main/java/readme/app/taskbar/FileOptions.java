@@ -7,7 +7,6 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.*;
 import org.jetbrains.annotations.NotNull;
 import readme.app.AppContext;
-import readme.app.Application;
 import readme.app.events.OpenFile;
 import readme.app.ulti.Memory;
 
