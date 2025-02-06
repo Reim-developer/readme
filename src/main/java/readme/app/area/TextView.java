@@ -12,27 +12,29 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.jetbrains.annotations.NotNull;
-import readme.app.Application;
+import readme.app.AppContext;
 import readme.app.ulti.Memory;
 
 public class TextView {
     public StyledText styledText;
     private final Memory memory;
     private final Color color;
-    private Composite textViewContainer;
+    private final AppContext appContext;
+    public Composite textViewContainer;
 
-    public TextView(@NotNull Application application) {
+    public TextView(@NotNull AppContext appContext) {
         this.memory = new Memory();
-        this.color = new Color(application.display, 47, 49,54);
+        this.appContext = appContext;
+        this.color = new Color(appContext.display, 47, 49,54);
+
+        setTextView();
     }
 
     /**
      * Display text view when user open a file
-     * @param composite Main composite layout, such as Shell
      */
-
-    public void setTextView(@NotNull Composite composite) {
-        textViewContainer = new Composite(composite, SWT.NONE);
+    private void setTextView() {
+        textViewContainer = new Composite(this.appContext.shell, SWT.NONE);
         textViewContainer.setLayout(new FormLayout());
         textViewContainer.setBackground(color);
 
@@ -56,10 +58,11 @@ public class TextView {
                 SWT.NONE |
                         SWT.MULTI |
                         SWT.V_SCROLL |
-                        SWT.H_SCROLL
+                        SWT.H_SCROLL |
+                        SWT.VIRTUAL
                 );
 
-        Font font  = new Font(composite.getDisplay(), "Consolas", 10, SWT.NORMAL);
+        Font font  = new Font(this.appContext.shell.getDisplay(), "Consolas", 10, SWT.NORMAL);
         this.styledText.setWordWrap(false);
         this.styledText.setEditable(false);
         this.styledText.setFont(font);
@@ -112,6 +115,4 @@ public class TextView {
 
         this.styledText.getVerticalBar().addListener(SWT.Selection, event -> lineNumber.redraw());
     }
-
-    public void showTextView(boolean isVisible) { this.textViewContainer.setVisible(isVisible); }
 }
