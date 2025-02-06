@@ -42,7 +42,12 @@ public class VirtualTextRenderer {
                         .map(compressedCache::getChunk)
                         .collect(Collectors.joining(System.lineSeparator()));
 
-                Display.getDefault().asyncExec(() -> this.styledText.replaceTextRange(0, this.styledText.getCharCount(), fileContent));
+                Display.getDefault().asyncExec(() -> {
+                    if(styledText.isDisposed()) return;
+                    styledText.setRedraw(false);
+                    styledText.setText(fileContent);
+                    styledText.setRedraw(true);
+                });
             }
 
         } catch (Exception ignored) {
