@@ -5,16 +5,16 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.jetbrains.annotations.NotNull;
-import readme.app.Application;
+import readme.app.AppContext;
 import readme.app.taskbar.FileOptions;
 
 public class FileEvent {
     private final FileOptions fileOptions;
-    private final Application application;
+    private final AppContext appContext;
 
-    public FileEvent(Application application) {
-        this.application = application;
-        this.fileOptions = new FileOptions(this.application);
+    public FileEvent(@NotNull AppContext appContext) {
+        this.appContext = appContext;
+        this.fileOptions = new FileOptions(this.appContext);
         this.fileOptions.setFileOptions();
     }
 
@@ -24,7 +24,7 @@ public class FileEvent {
             public void mouseEnter(MouseEvent e) {
                 Display.getCurrent().timerExec(100, () -> {
                     fileOptions.showFileOptions(true);
-                    application.shell.layout();
+                    appContext.shell.layout();
                 });
             }
         });
@@ -36,7 +36,7 @@ public class FileEvent {
                     if(fileOptions.isMouseOverTable()) return;
 
                     fileOptions.showFileOptions(false);
-                    application.shell.layout();
+                    appContext.shell.layout();
                 });
             }
         });
@@ -46,7 +46,7 @@ public class FileEvent {
             public void mouseExit(MouseEvent e) {
                 Display.getCurrent().timerExec(100, () -> {
                     fileOptions.showFileOptions(false);
-                    application.shell.layout();
+                    appContext.shell.layout();
                 });
             }
         });
