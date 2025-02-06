@@ -6,6 +6,7 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.*;
 import org.jetbrains.annotations.NotNull;
+import readme.app.AppContext;
 import readme.app.Application;
 import readme.app.events.OpenFile;
 import readme.app.ulti.Memory;
@@ -19,13 +20,13 @@ public class FileOptions {
     private final OpenFile openFile;
     private final Memory memory;
 
-    public FileOptions(@NotNull Application application) {
-        this.table = new Table(application.shell, SWT.FULL_SELECTION);
+    public FileOptions(@NotNull AppContext appContext) {
+        this.table = new Table(appContext.shell, SWT.FULL_SELECTION);
         this.tableColumn = new TableColumn(table, SWT.CENTER);
 
         this.fileOptions = new String[]{"Open File", "Open Folder", "Exit"};
-        this.color = new Color(application.display, 47, 49, 54);
-        this.openFile = new OpenFile(application);
+        this.color = new Color(appContext.display, 47, 49, 54);
+        this.openFile = new OpenFile(appContext);
         this.memory = new Memory();
     }
 
