@@ -3,14 +3,15 @@ package readme.app.events;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 import org.jetbrains.annotations.NotNull;
+import readme.app.AppContext;
 import readme.app.Application;
 import readme.app.dialog.File;
 
 public class OpenFile {
     private final File file;
 
-    public OpenFile(@NotNull Application application) {
-        this.file = new File(application);
+    public OpenFile(@NotNull AppContext appContext) {
+        this.file = new File(appContext);
     }
 
     /**
