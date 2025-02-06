@@ -7,7 +7,8 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import readme.app.Application;
+import org.jetbrains.annotations.NotNull;
+import readme.app.AppContext;
 import readme.app.events.MenuEvent;
 import readme.app.ulti.ImageSet;
 
@@ -15,8 +16,8 @@ public class MainMenu {
     private final ImageSet imageSet = new ImageSet();
     private final MenuEvent menuEvent;
 
-    public MainMenu(Application application) {
-        this.menuEvent = new MenuEvent(application);
+    public MainMenu(@NotNull AppContext appContext) {
+        this.menuEvent = new MenuEvent(appContext);
     }
 
     public void setMainMenuButton(Composite composite, Display display) {
