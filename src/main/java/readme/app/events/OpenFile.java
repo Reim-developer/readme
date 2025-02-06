@@ -4,7 +4,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 import org.jetbrains.annotations.NotNull;
 import readme.app.AppContext;
-import readme.app.Application;
 import readme.app.dialog.File;
 
 public class OpenFile {
