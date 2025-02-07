@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.jetbrains.annotations.NotNull;
 import readme.app.AppContext;
 import readme.app.ulti.Memory;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TextView {
     public StyledText styledText;
@@ -21,6 +23,8 @@ public class TextView {
     private final Color color;
     private final AppContext appContext;
     public Composite textViewContainer;
+    private final Map<Integer, String> wrappedLinesCache = new HashMap<>();
+    private GC gc;
 
     public TextView(@NotNull AppContext appContext) {
         this.memory = new Memory();
@@ -61,6 +65,8 @@ public class TextView {
                         SWT.H_SCROLL |
                         SWT.VIRTUAL
                 );
+
+        this.gc = new GC(styledText);
 
         Font font  = new Font(this.appContext.shell.getDisplay(), "Consolas", 10, SWT.NORMAL);
         this.styledText.setWordWrap(false);
