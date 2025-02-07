@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import readme.app.AppContext;
 
 public class WordWrap {
-    private boolean enable = false;
+    private static boolean enable = false;
     private final AppContext appContext;
     private final MessageBox messageBox;
 
@@ -31,17 +31,10 @@ public class WordWrap {
             return;
         }
 
-        if(!enable) {
-            appContext.getTextView().styledText.getParent().setLayoutDeferred(true);
-            appContext.getTextView().styledText.setWordWrap(true);
-            appContext.getTextView().styledText.getParent().setLayoutDeferred(false);
-            table.getItem(0).setText("Disable word wrap");
-            enable = true;
-            return;
-        }
-        appContext.getTextView().styledText.setWordWrap(false);
-        table.getItem(0).setText("Enable word wrap");
-        enable = false;
+        enable = !enable;
+        table.getItem(0).setText(enable ? "Disable word wrap" : "Enable word wrap");
+        appContext.getTextView().styledText.setWordWrap(enable);
+        appContext.getTextView().styledText.redraw();
     }
 
     /**
